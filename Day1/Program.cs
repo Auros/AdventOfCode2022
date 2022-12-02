@@ -52,8 +52,6 @@ else
     }
 }
 
-// Or, with LINQ
-
 // Export the output
 File.WriteAllText(Path.Combine(outputDir.FullName, "1.1.txt"), $"""
 The amount of calories the elf carrying the most calories:
@@ -78,8 +76,6 @@ else
     for (int i = 0; i < topElvesCount || i >= elves.Count; i++)
         topCalorieCount += elves[i].Calories;
 }
-
-// or, with LINQ
 
 // Export the output
 File.WriteAllText(Path.Combine(outputDir.FullName, "1.2.txt"), $"""
