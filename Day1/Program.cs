@@ -5,7 +5,7 @@ DirectoryInfo outputDir = new(Environment.GetEnvironmentVariable("AOC_OUTPUT_DIR
 
 // - [ 1.1 ] -
 
-List<Elf> elfs = new();
+List<Elf> elves = new();
 var inputLines = File.ReadAllLines(Path.Combine(inputDir.FullName, "1.1.txt"));
 
 Elf? currentElf = null;
@@ -21,11 +21,11 @@ foreach (var line in inputLines)
     }
 
     // If we have a calorie value (this line isn't empty) and there isn't
-    // an elf assign, we assign it and add it to the collection of elfs.
+    // an elf assign, we assign it and add it to the collection of elves.
     if (currentElf is null)
     {
         currentElf = new Elf();
-        elfs.Add(currentElf);
+        elves.Add(currentElf);
     }
 
     // Parse the calories as an integer.
@@ -36,16 +36,34 @@ foreach (var line in inputLines)
 }
 
 // Find the elf with the most calories
-Elf? mostCalorieElf = null;
-for (int i = 0; i < elfs.Count; i++)
+Elf? mostCaloricElf = null;
+for (int i = 0; i < elves.Count; i++)
 {
-    var elf = elfs[i];
-    if (mostCalorieElf is null || elf.Calories > mostCalorieElf.Calories)
-        mostCalorieElf = elf;
+    var elf = elves[i];
+    if (mostCaloricElf is null || elf.Calories > mostCaloricElf.Calories)
+        mostCaloricElf = elf;
 }
 
-// Finally, export the output
-File.WriteAllText(Path.Combine(outputDir.FullName, "1.1.txt"),$"""
+// Export the output
+File.WriteAllText(Path.Combine(outputDir.FullName, "1.1.txt"), $"""
 The amount of calories the elf carrying the most calories:
-{mostCalorieElf?.Calories ?? 0}
+{mostCaloricElf?.Calories ?? 0}
+""");
+
+// - [ 1.2 ] -
+
+const int topElvesCount = 3;
+
+// Sort the elves from most amount of calories to least.
+elves.Sort((a, b) => b.Calories - a.Calories);
+
+// Add the top X elves calorie counts. 
+int topCalorieCount = default;
+for (int i = 0; i < topElvesCount || i >= elves.Count; i++)
+    topCalorieCount += elves[i].Calories;
+
+// Export the output
+File.WriteAllText(Path.Combine(outputDir.FullName, "1.2.txt"), $"""
+The amount of calories the top {topElvesCount} elves combined are carrying is:
+{topCalorieCount}
 """);
