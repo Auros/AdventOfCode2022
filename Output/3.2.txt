@@ -1,0 +1,2 @@
+Sum of the elf group priorities:
+2805
