@@ -3,9 +3,7 @@ DirectoryInfo outputDir = new(Environment.GetEnvironmentVariable("AOC_OUTPUT_DIR
 
 var input = File.ReadAllLines(Path.Combine(inputDir.FullName, "4.txt"));
 
-// - [ 4.1 ] -
-
-var overlappingPairCount = input.Count(line =>
+static SectionWorkPair GetSectionWorkPairs(string line)
 {
     var rawPairs = line.Split(',');
     var rawFirst = rawPairs[0].Split('-');
@@ -22,11 +20,17 @@ var overlappingPairCount = input.Count(line =>
     var firstSectionRange = Enumerable.Range(firstStart, firstSize);
     var secondSectionRange = Enumerable.Range(secondStart, secondSize);
 
-    // Order matters here. When we go to check the contents, we can safety use LINQ
-    // without having to run it in both directions by sorting based on which one is larger.
     var larger = firstSize > secondSize ? firstSectionRange : secondSectionRange;
     var smaller = larger == secondSectionRange ? firstSectionRange : secondSectionRange;
 
+    return new SectionWorkPair(larger, smaller);
+}
+
+// - [ 4.1 ] -
+
+var overlappingPairCount = input.Count(line =>
+{
+    var (larger, smaller) = GetSectionWorkPairs(line);
     return smaller.All(larger.Contains);
 });
 
@@ -35,3 +39,19 @@ File.WriteAllText(Path.Combine(outputDir.FullName, "4.1.txt"), $"""
 Overlapping Pair Count:
 {overlappingPairCount}
 """);
+
+// - [ 4.2 ] -
+
+var overlappingPairRangeCount = input.Count(line =>
+{
+    var (larger, smaller) = GetSectionWorkPairs(line);
+    return smaller.Any(larger.Contains);
+});
+
+// Export the output
+File.WriteAllText(Path.Combine(outputDir.FullName, "4.2.txt"), $"""
+Overlapping Pair Range Count:
+{overlappingPairRangeCount}
+""");
+
+readonly record struct SectionWorkPair(IEnumerable<int> Larger, IEnumerable<int> Smaller);
