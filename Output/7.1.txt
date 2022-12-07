@@ -1,0 +1,2 @@
+Total Sum of Smaller Directories:
+1517599
