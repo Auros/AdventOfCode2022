@@ -38,7 +38,7 @@ void ReadInstruction(string line)
         }
         else if (current is not null && current.IsDirectory && current.Children is not null)
         {
-            // Move longo directory of {arg}
+            // Move into directory of {arg}
             current = current.Children.First(c => c.Name == arg);
         }
     }
@@ -59,7 +59,7 @@ void ReadInstruction(string line)
         else
         {
             var file = line.Split(' ');
-            long fileSize = long.Parse(file[0]);
+            int fileSize = int.Parse(file[0]);
             string fileName = file[1];
 
             FSI fsi = new(fileName, false, null);
@@ -88,11 +88,25 @@ Total Sum of Smaller Directories:
 {sumOfSmallerDirectories}
 """);
 
+// - [ 7.2 ] -
+
+const int fileSystemDiskSpace = 70_000_000;
+const int requiredDiskSpaceForUpdate = 30_000_000;
+int diskSpaceToClear = requiredDiskSpaceForUpdate - (fileSystemDiskSpace - root!.Size);
+
+var directoryToDelete = allDirectories.Where(d => d.IsDirectory && d.Size >= diskSpaceToClear).OrderBy(d => d.Size).FirstOrDefault();
+
+// Export the output
+File.WriteAllText(Path.Combine(outputDir.FullName, "7.2.txt"), $"""
+Total size of the directory to delete:
+{directoryToDelete?.Size}
+""");
+
 
 record class FSI(string Name, bool IsDirectory, List<FSI>? Children)
 {
     [DebuggerBrowsable(DebuggerBrowsableState.Never)]
     public FSI Parent { get; set; } = null!;
 
-    public long Size { get; set; }
+    public int Size { get; set; }
 }

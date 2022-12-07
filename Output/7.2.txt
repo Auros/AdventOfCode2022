@@ -1,0 +1,2 @@
+Total size of the directory to delete:
+2481982
