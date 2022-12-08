@@ -3,7 +3,6 @@ DirectoryInfo outputDir = new(Environment.GetEnvironmentVariable("AOC_OUTPUT_DIR
 
 var input = File.ReadAllText(Path.Combine(inputDir.FullName, "6.txt"));
 
-
 int? GetMarker(char[] buffer)
 {
     int? index = null;
