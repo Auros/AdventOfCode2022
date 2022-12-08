@@ -83,9 +83,6 @@ for (int i = 0; i < width; i++)
 {
     for (int c = 0; c < height; c++)
     {
-        if (i is 3 && c is 2)
-            _ = true;
-
         var score = CalculateScenicScore(i, c);
         if (score > bestScore)
             bestScore = score;
@@ -97,6 +94,5 @@ File.WriteAllText(Path.Combine(outputDir.FullName, "8.2.txt"), $"""
 Best Scenic Score Available:
 {bestScore}
 """);
-
 
 readonly record struct Coordinate(int X, int Y);
