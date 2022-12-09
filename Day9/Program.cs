@@ -23,6 +23,7 @@ foreach (var line in input)
 
     var steps = int.Parse(line[2..]);
 
+    if (!visited.Contains(currentTailLocation))
         visited[reader++] = currentTailLocation;
 
     for (int i = 0; i < steps; i++)
