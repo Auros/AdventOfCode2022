@@ -5,8 +5,7 @@ var input = File.ReadAllLines(Path.Combine(inputDir.FullName, "9.txt"));
 
 // - [ 9.1 ] -
 
-int reader = 0;
-Span<(int, int)> visited = stackalloc (int, int)[50_000];
+HashSet<(int, int)> visited = new();
 
 (int, int) currentHeadLocation = (0, 0);
 (int, int) currentTailLocation = (0, 0);
@@ -23,8 +22,7 @@ foreach (var line in input)
 
     var steps = int.Parse(line[2..]);
 
-    if (!visited.Contains(currentTailLocation))
-        visited[reader++] = currentTailLocation;
+    visited.Add(currentTailLocation);
 
     for (int i = 0; i < steps; i++)
     {
@@ -41,27 +39,20 @@ foreach (var line in input)
         if (diffX > 1 || diffX < -1 || diffY > 1 || diffY < -1)
         {
             currentTailLocation = previousHeadLocation;
-
-            if (!visited.Contains(currentTailLocation))
-                visited[reader++] = currentTailLocation;
+            visited.Add(currentTailLocation);
         }
     }
 }
 
-// Add one to account for the first position, which isn't recognized because
-// the default values of the span are the first position of the tail (0, 0).
-reader++;
-
 // Export the output
 File.WriteAllText(Path.Combine(outputDir.FullName, "9.1.txt"), $"""
 Unique Places Visited:
-{reader}
+{visited.Count}
 """);
 
 // - [ 9.2 ] -
-visited.Clear();
+visited = new HashSet<(int, int)>();
 Span<(int, int)> rope = stackalloc (int, int)[10];
-reader = 0;
 
 foreach (var line in input)
 {
@@ -97,20 +88,13 @@ foreach (var line in input)
                 rope[c] = (knotX + (diffX is 0 ? 0 : (diffX > 0 ? -1 : 1)), knotY + (diffY is 0 ? 0 : (diffY > 0 ? -1 : 1)));
         }
 
-        _ = rope;
         var tail = rope[^1];
-        
-        if (!visited.Contains(tail))
-            visited[reader++] = tail;
+        visited.Add(tail);
     }
 }
-
-// Add one to account for the first position, which isn't recognized because
-// the default values of the span are the first position of the tail (0, 0).
-reader++;
 
 // Export the output
 File.WriteAllText(Path.Combine(outputDir.FullName, "9.2.txt"), $"""
 Unique Places Visited:
-{reader}
+{visited.Count}
 """);
