@@ -3,22 +3,21 @@
 DirectoryInfo inputDir = new(Environment.GetEnvironmentVariable("AOC_INPUT_DIR")!);
 DirectoryInfo outputDir = new(Environment.GetEnvironmentVariable("AOC_OUTPUT_DIR")!);
 
-static RPS ConvertToRPS(string input)
+static RPS ConvertToRPS(char input)
 {
     return input switch
     {
-        "A" or "X" => RPS.Rock,
-        "B" or "Y" => RPS.Paper,
-        "C" or "Z" => RPS.Scissors,
+        'A' or 'X' => RPS.Rock,
+        'B' or 'Y' => RPS.Paper,
+        'C' or 'Z' => RPS.Scissors,
         _ => throw new NotImplementedException(),
     };
 }
 
 var rounds = File.ReadAllLines(Path.Combine(inputDir.FullName, "2.txt")).Select(static line =>
 {
-    var parts = line.Split(' ');
-    var first = ConvertToRPS(parts[0]);
-    var second = ConvertToRPS(parts[1]);
+    var first = ConvertToRPS(line[0]);
+    var second = ConvertToRPS(line[2]);
     return new
     {
         First = first,
