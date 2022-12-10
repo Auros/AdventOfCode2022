@@ -1,0 +1,2 @@
+Sum of every 40th cycle:
+15120

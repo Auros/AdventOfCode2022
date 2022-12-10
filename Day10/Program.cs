@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text;
 
 DirectoryInfo inputDir = new(Environment.GetEnvironmentVariable("AOC_INPUT_DIR")!);
 DirectoryInfo outputDir = new(Environment.GetEnvironmentVariable("AOC_OUTPUT_DIR")!);
@@ -48,3 +49,25 @@ Sum of every 40th cycle:
 {sum}
 """);
 
+// - [ 10.2 ] -
+
+int currentRow = 0;
+int currentCrt = 0;
+Span<char> crt = stackalloc char[247]; // :tf:
+crt[currentCrt++] = register[0] == 1 || register[0] == 0 ? '#' : '.';
+for (int i = 1; i < reader; i++)
+{
+    if (i % 40 == 0)
+    {
+        crt[currentCrt++] = '\n';
+        currentRow += 40;
+    }
+
+    var value = register[i - 1] + currentRow;
+    crt[currentCrt++] = (value == i || value + 1 == i || value - 1 == i) ? '#' : '.' ;
+}
+
+var output = new string(crt);
+
+// Export the output
+File.WriteAllText(Path.Combine(outputDir.FullName, "10.2.txt"), output);
