@@ -119,8 +119,6 @@ static long CalculateMonkeyBusiness(int rounds, int calmingEffect, ref Span<Monk
                 // Calculate the new worry level
                 var item = items[q];
 
-                //var lcm = Lcm(item, monkey.Test);
-
                 item = monkey.Calculate(item) / calmingEffect % lcm;
 
                 // Perform test
