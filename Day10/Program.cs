@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Text;
-
-DirectoryInfo inputDir = new(Environment.GetEnvironmentVariable("AOC_INPUT_DIR")!);
+﻿DirectoryInfo inputDir = new(Environment.GetEnvironmentVariable("AOC_INPUT_DIR")!);
 DirectoryInfo outputDir = new(Environment.GetEnvironmentVariable("AOC_OUTPUT_DIR")!);
 
 var input = File.ReadAllLines(Path.Combine(inputDir.FullName, "10.txt"));
