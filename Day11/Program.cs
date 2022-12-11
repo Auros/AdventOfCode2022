@@ -109,8 +109,6 @@ static long CalculateMonkeyBusiness(int rounds, int calmingEffect, ref Span<Monk
         for (int c = 0; c < monkeys.Length; c++)
         {
             var monkey = monkeys[c];
-            if (monkey.Holding is 0) // Monkey isn't holding anything? Skip it's turn.
-                continue;
 
             for (int q = 0; q < items.Length && monkey.Holding is not 0; q++)
             {
