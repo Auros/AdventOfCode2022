@@ -1,0 +1,2 @@
+Minimum Steps To Goal:
+383
